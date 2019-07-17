@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html ng-app="bookApp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Search Books</title>
+    <link href="css/main.css" rel="stylesheet">
+</head>
+<body ng-controller="BookCtrl">
+<div>
+    <div id="box">
+        <input type="text" placeholder="Search by author,book id, title etc." ng-model="searchText"/>
+    </div>
+    <nav>
+        <ul class="styleNone displayFlex list">
+            <li>
+                <ul class="styleNone displayFlex listElement header">
+                    <li ng-click="sortBy('globalbookid')">Book Id</li>
+                    <li ng-click="sortBy('title')"> Title</li>
+                    <li>Author(s)</li>
+                    <li ng-click="sortBy('ebookisbn10')">eBook ISBN10</li>
+                    <li ng-click="sortBy('ebookisbn13')">eBook ISBN13</li>
+                    <li ng-click="sortBy('printisbn10')">Print ISBN10</li>
+                    <li ng-click="sortBy('printisbn13')">Print ISBN13</li>
+                    <li ng-click="sortBy('librarysupported')">Library Supported</li>
+                    <li ng-click="sortBy('editiontype')">Edition Type</li>
+                    <li>Preview Link</li>
+                </ul>
+            </li>
+            <li ng-repeat="b in book | orderBy:sortObject.sortBy:sortObject[sortObject.sortBy]|filter:searchText">
+                <ul class="styleNone listElement displayFlex">
+                    <li>{{b.globalbookid}}</li>
+                    <li>{{b.title}}</li>
+                    <li>
+                        <ul class=" styleNone">
+                            <li ng-repeat="a in b.authors">
+                                {{a.firstname+" "+a.middlename+" "+a.lastname}}
+                            </li>
+
+                        </ul>
+                    </li>
+                    <li>{{b.ebookisbn10}}</li>
+                    <li>{{b.ebookisbn13}}</li>
+                    <li>{{b.printisbn10}}</li>
+                    <li>{{b.printisbn13}}</li>
+                    <li>{{b.librarysupported}}</li>
+                    <li>{{b.editiontype}}</li>
+                    <li>{{b.previewlink || "-"}}</li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+</div>
+<script src="lib/angular.min.js"></script>
+<script src="src/controller/BookCtrl.js"></script>
+<script src="src/service/BookService.js"></script>
+<script src="src/config/UrlConfig.js"></script>
+</body>
+</html>
